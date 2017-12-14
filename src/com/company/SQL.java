@@ -10,8 +10,8 @@ import java.util.LinkedList;
 
 public class SQL {
     private String dbURL = "jdbc:postgresql://pgsql2.mif/studentu";
-    private String dbUsername = "rasi3530";
-    private String dbPassword = "rasi3530";
+    private String dbUsername = "inma3638";
+    private String dbPassword = "inma3638";
     private Connection postGresConn = null;
 
     public SQL() {

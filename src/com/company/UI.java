@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class UI {
 
-    public int pasirinkimas = 1;
+    public int ch;
     public String id;
     public String vardas;
     public String pavarde;
@@ -15,27 +15,35 @@ public class UI {
     public String valstybinisNr;
     public String pavadinimas;
     public String tiekiaIKI;
+    public String Adresas;
     public int kaina;
     public int kodas;
-    public int kvadratura;
-    public int nr;
+    public int Kvadratura;
+    public int Nr;
 
     public void start() {
         SQL db = new SQL();
-        BufferedReader bufRead = new BufferedReader(new InputStreamReader(System.in));
+        //BufferedReader bufRead = new BufferedReader(new InputStreamReader(System.in));
+        choice = Integer.parseInt(bufRead.readLine());
 
-        //atspausdinti pasirinkimus
+        printMenu();
 
-        while (pasirinkimas != 0) {
+        while (1) {
             try {
-                System.out.print(">");
-                pasirinkimas = Integer.parseInt(bufRead.readLine());
-                switch (pasirinkimas) {
+                ch = Integer.parseInt(bufRead.readLine());
+                switch (ch) {
                     case 0:
+                        System.Exit(0);
                         break;
                     case 1:
                         addDarbuotojas(bufRead, db);
                         break;
+                    case 2:
+                        addParduotuve(bufRead, db);
+                    case 3:
+                        addSandelis(bufRead, db);
+                    case 4:
+                        addTiekejas(bufRead, db);
                     default:
                         System.out.println("Blogas pasirinkimas");
                         break;
@@ -49,8 +57,7 @@ public class UI {
     }
 
     public void addDarbuotojas(BufferedReader bufRead, SQL db) {
-        System.out.println("Iveskite naujo darbuotojo asmens koda, varda,"
-                + " pavarde, pareigas, atlyginima, darbo pradzios data");
+        System.out.println("Naujo darbuotojo duomenys");
 
         try {
             System.out.println("Iveskite naujo darbuotojo varda");
@@ -64,9 +71,35 @@ public class UI {
             System.out.println("Iveskite naujo darbuotojo parduotuves numeri");
             nr = Integer.parseInt(bufRead.readLine());
 
-            db.queryDb("INSERT INTO rasi3530.Darbuotojas VALUES('"+vardas+"','"+pavarde+"', '"+id+"', '"+pareigos+"', '"+nr+"');");
+            db.queryDb("INSERT INTO inma3638.Darbuotojas VALUES('"+vardas+"','"+pavarde+"', '"+id+"', '"+pareigos+"', '"+nr+"');");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    public void addParduotuve(BufferedReader bufRead, SQL db){
+        System.out.printline("Naujos parduotuves duomenys");
+
+        try {
+            System.out.println("Iveskite naujos parduotuves nr. ");
+            Nr = Integer.parseInt(bufRead.readLine());
+            System.out.println("Iveskite naujos parduotuves adresa");
+            Adresas = bufRead.readLine();
+            System.out.println("Iveskite naujos parduotuves kvadratura ");
+            Kvadratura = Integer.parseInt(bufRead.readLine());
+
+
+            db.queryDb("INSERT INTO inma3638.Parduotuve VALUES('"+Nr+"','"+Adresas+"', '"+Kvadratura+"');");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void printMenu(){
+        System.out.printline("Pasirinkite norima operacija:");
+        System.out.printline("1. Prideti nauja darbuotoja");
+        System.out.printline("2. Prideti nauja parduotuve");
+        System.out.printline("3. Prideti nauja sandeli");
+        System.out.printline("4. Prideti nauja tiekeja");
     }
 }
