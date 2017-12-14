@@ -34,7 +34,7 @@ public class UI {
                     case 0:
                         break;
                     case 1:
-
+                        addDarbuotojas(bufRead, db);
                         break;
                     default:
                         System.out.println("Blogas pasirinkimas");
@@ -45,6 +45,28 @@ public class UI {
             } catch (NumberFormatException e) {
                 System.out.println("Netinkamas ivesties formatas");
             }
+        }
+    }
+
+    public void addDarbuotojas(BufferedReader bufRead, SQL db) {
+        System.out.println("Iveskite naujo darbuotojo asmens koda, varda,"
+                + " pavarde, pareigas, atlyginima, darbo pradzios data");
+
+        try {
+            System.out.println("Iveskite naujo darbuotojo varda");
+            vardas = bufRead.readLine();
+            System.out.println("Iveskite naujo darbuotojo pavarde");
+            pavarde = bufRead.readLine();
+            System.out.println("Iveskite naujo darbuotojo ID");
+            id = bufRead.readLine();
+            System.out.println("Iveskite naujo darbuotojo pareigas");
+            pareigos = bufRead.readLine();
+            System.out.println("Iveskite naujo darbuotojo parduotuves numeri");
+            nr = Integer.parseInt(bufRead.readLine());
+
+            db.queryDb("INSERT INTO rasi3530.Darbuotojas VALUES('"+vardas+"','"+pavarde+"', '"+id+"', '"+pareigos+"', '"+nr+"');");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
