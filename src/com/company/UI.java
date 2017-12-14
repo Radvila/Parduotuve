@@ -2,6 +2,8 @@ package com.company;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class UI {
 
@@ -138,15 +140,15 @@ public class UI {
         }
     }
 
-    private void updatePosition(BufferedReader bufRead, RepairShopSql db) {
+    private void updatePosition(BufferedReader bufRead, SQL db) {
         List<List> result = new LinkedList<List>();
         try {
             result = db.queryDb("SELECT * FROM inma3638.darbuotojas;");
             System.out.println("Darbuotojai:");
             for (int i = 0; i < result.size(); i++) {
                 System.out.println((String) result.get(i).get(0) + " " + result.get(i).get(1) + " "
-                        + result.get(i).get(2) + " " + result.get(i).get(3)) + " " result.get(i).get(4) +
-                        " " + result.get(i).get(5);
+                        + result.get(i).get(2) + " " + result.get(i).get(3)) + " " + result.get(i).get(4) +
+                        " " + result.get(i).get(5));
             } System.out.println("Iveskite darbuotojo ID");
             int id = Integer.parseInt(bufRead.readLine());
             System.out.println("Iveskite naujas pareigas:");
@@ -155,6 +157,39 @@ public class UI {
                     + " WHERE ID = '" + id + "';");
         } catch (Exception e) {
             System.out.println("Error updating salary: " + e.getMessage());
+        }
+    }
+
+    private void findDarbuotojasByPard(BufferedReader bufRead, SQL db) {
+        List<List> result = new LinkedList<List>();
+
+        try {
+            result = db.queryDb("SELECT * FROM inma3638.Parduotuve;");
+
+            System.out.println("Parduotuves");
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println(
+                        (String) result.get(i).get(0) + " " + result.get(i).get(1) + " " + result.get(i).get(2));
+            }
+
+            System.out.println("Iveskite parduotuves numeri");
+
+            result = db.queryDb("SELECT * FROM inma3638.Darbuotojas, "
+                    + "WHERE Darbuotojas.Pard_Nr = Parduotuve.Nr AND AK = '" + bufRead.readLine()
+                    + "'");
+
+            if (result.isEmpty()) {
+                System.out.println("Tokios parduotuves nera arba ji neturi darbuotoju");
+            } else {
+                System.out.println("Parduotuves darbuotojai");
+                for (int i = 0; i < result.size(); i++) {
+                    System.out.println(
+                            (String) result.get(i).get(0) + " " + result.get(i).get(1) + " " + result.get(i).get(2)
+                                    + " " + result.get(i).get(4));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
