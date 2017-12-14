@@ -138,6 +138,26 @@ public class UI {
         }
     }
 
+    private void updatePosition(BufferedReader bufRead, RepairShopSql db) {
+        List<List> result = new LinkedList<List>();
+        try {
+            result = db.queryDb("SELECT * FROM inma3638.darbuotojas;");
+            System.out.println("Darbuotojai:");
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println((String) result.get(i).get(0) + " " + result.get(i).get(1) + " "
+                        + result.get(i).get(2) + " " + result.get(i).get(3)) + " " result.get(i).get(4) +
+                        " " + result.get(i).get(5);
+            } System.out.println("Iveskite darbuotojo ID");
+            int id = Integer.parseInt(bufRead.readLine());
+            System.out.println("Iveskite naujas pareigas:");
+            String pareigos = bufRead.readLine();
+            result = db.queryDb("UPDATE inma3638.Darbuotojas SET Pareigos = " + pareigos
+                    + " WHERE ID = '" + id + "';");
+        } catch (Exception e) {
+            System.out.println("Error updating salary: " + e.getMessage());
+        }
+    }
+
     public void printMenu(){
         System.out.println("Pasirinkite norima operacija:");
         System.out.println("1. Prideti nauja darbuotoja");
