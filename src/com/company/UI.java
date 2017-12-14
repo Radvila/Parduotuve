@@ -175,13 +175,46 @@ public class UI {
             System.out.println("Iveskite parduotuves numeri");
 
             result = db.queryDb("SELECT * FROM inma3638.Darbuotojas, "
-                    + "WHERE Darbuotojas.Pard_Nr = Parduotuve.Nr AND AK = '" + bufRead.readLine()
+                    + "WHERE Darbuotojas.Pard_Nr = Parduotuve.Nr AND Nr = '" + bufRead.readLine()
                     + "'");
 
             if (result.isEmpty()) {
                 System.out.println("Tokios parduotuves nera arba ji neturi darbuotoju");
             } else {
                 System.out.println("Parduotuves darbuotojai");
+                for (int i = 0; i < result.size(); i++) {
+                    System.out.println(
+                            (String) result.get(i).get(0) + " " + result.get(i).get(1) + " " + result.get(i).get(2)
+                                    + " " + result.get(i).get(4));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void findSandelioTiekejai(BufferedReader bufRead, SQL db) {
+        List<List> result = new LinkedList<List>();
+
+        try {
+            result = db.queryDb("SELECT * FROM inma3638.Sandelis;");
+
+            System.out.println("Sandelis");
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println(
+                        (String) result.get(i).get(0) + " " + result.get(i).get(1));
+            }
+
+            System.out.println("Iveskite sandelio adresa");
+
+            result = db.queryDb("SELECT * FROM inma3638.Tiekejas, "
+                    + "WHERE Tiekejas.Tiek_ID = Tiekia.Tiek_ID AND Tiekia.S_Adr = '" + bufRead.readLine()
+                    + "'");
+
+            if (result.isEmpty()) {
+                System.out.println("Tokio sandelio nera arba i sandelys neturi tiekeju");
+            } else {
+                System.out.println("Sandelio tiekejai");
                 for (int i = 0; i < result.size(); i++) {
                     System.out.println(
                             (String) result.get(i).get(0) + " " + result.get(i).get(1) + " " + result.get(i).get(2)
