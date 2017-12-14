@@ -1,26 +1,26 @@
 package com.company;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class UI {
 
     public int ch;
-    public String id;
+    public int id;
     public String vardas;
     public String pavarde;
     public String pareigos;
-    public String Tipas;
+    public String tipas;
     public String valstybinisNr;
     public String pavadinimas;
-    public String tiekiaIKI;
-    public String Adresas;
-    public String S_Adr;
+    public String tiekiaIki;
+    public String adresas;
+    public String sandelioAdr;
+    public int parduotuvesNr;
     public int kaina;
     public int kodas;
-    public int Kvadratura;
-    public int Nr;
+    public int kvadratura;
+    public int nr;
 
     public void start() {
         SQL db = new SQL();
@@ -66,7 +66,7 @@ public class UI {
             System.out.println("Iveskite naujo darbuotojo pavarde");
             pavarde = bufRead.readLine();
             System.out.println("Iveskite naujo darbuotojo ID");
-            id = bufRead.readLine();
+            id = Integer.parseInt(bufRead.readLine())
             System.out.println("Iveskite naujo darbuotojo pareigas");
             pareigos = bufRead.readLine();
             System.out.println("Iveskite naujo darbuotojo parduotuves numeri");
@@ -79,36 +79,59 @@ public class UI {
     }
 
     public void addParduotuve(BufferedReader bufRead, SQL db){
-        System.out.printline("Naujos parduotuves duomenys");
+        System.out.println("Naujos parduotuves duomenys");
 
         try {
             System.out.println("Iveskite naujos parduotuves nr. ");
-            Nr = Integer.parseInt(bufRead.readLine());
+            nr = Integer.parseInt(bufRead.readLine());
             System.out.println("Iveskite naujos parduotuves adresa");
-            Adresas = bufRead.readLine();
+            adresas = bufRead.readLine();
             System.out.println("Iveskite naujos parduotuves kvadratura ");
-            Kvadratura = Integer.parseInt(bufRead.readLine());
+            kvadratura = Integer.parseInt(bufRead.readLine());
 
 
-            db.queryDb("INSERT INTO inma3638.Parduotuve VALUES('"+Nr+"','"+Adresas+"', '"+Kvadratura+"');");
+            db.queryDb("INSERT INTO inma3638.Parduotuve VALUES('"+nr+"','"+ adresas +"', '"+ kvadratura +"');");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     public void addSandelis(BufferedReader bufRead, SQL db){
-        System.out.printline("Naujo sandelio duomenys");
+        System.out.println("Naujo sandelio duomenys");
 
         try {
             System.out.println("Iveskite naujo sandelio tipa");
-            Kvadratura = bufRead.readLine();
+            kvadratura = Integer.parseInt(bufRead.readLine());
             System.out.println("Iveskite naujo sandelio adresa");
-            S_Adr = bufRead.readLine();
+            sandelioAdr = bufRead.readLine();
             System.out.println("Kuriai parduotuvei tiekia");
-            Pard_Nr = Integer.parseInt(bufRead.readLine());
+            parduotuvesNr = Integer.parseInt(bufRead.readLine());
 
-            db.queryDb("INSERT INTO inma3638.Sandelis VALUES('"+Tipas+"','"+S_Adr+"');");
-            db.queryDb("INSERT INTO inma3638.gauna VALUES('"+S_Adr"','"Pard_Nr"'););
+            db.queryDb("INSERT INTO inma3638.Sandelis VALUES('"+ tipas +"','"+ sandelioAdr +"');");
+            db.queryDb("INSERT INTO inma3638.gauna VALUES('"+ sandelioAdr +"','"+ parduotuvesNr +"');");
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void addTiekejas(BufferedReader bufRead, SQL db){
+        System.out.println("Naujo tiekejo duomenys");
+
+        try {
+            System.out.println("Iveskite tiekejo pavadinima");
+            pavadinimas = bufRead.readLine();
+            System.out.println("Iveskite tiekejo adresa");
+            adresas = bufRead.readLine();
+            System.out.println("Iveskite tiekejo ID");
+            id = Integer.parseInt(bufRead.readLine());
+            System.out.println("Iveskite iki kada tiekia");
+            tiekiaIki = bufRead.readLine();
+            System.out.println("Iveskite sandelio adresa");
+            sandelioAdr = bufRead.readLine();
+
+            db.queryDb("INSERT INTO inma3638.Tiekejas VALUES('"+pavadinimas+"','"+adresas+"','"+id+"','"+tiekiaIki+"');");
+            db.queryDb("INSERT INTO inma3638.tiekia VALUES('"+ sandelioAdr +"','"+id+"');");
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -116,10 +139,10 @@ public class UI {
     }
 
     public void printMenu(){
-        System.out.printline("Pasirinkite norima operacija:");
-        System.out.printline("1. Prideti nauja darbuotoja");
-        System.out.printline("2. Prideti nauja parduotuve");
-        System.out.printline("3. Prideti nauja sandeli");
-        System.out.printline("4. Prideti nauja tiekeja");
+        System.out.println("Pasirinkite norima operacija:");
+        System.out.println("1. Prideti nauja darbuotoja");
+        System.out.println("2. Prideti nauja parduotuve");
+        System.out.println("3. Prideti nauja sandeli");
+        System.out.println("4. Prideti nauja tiekeja");
     }
 }
