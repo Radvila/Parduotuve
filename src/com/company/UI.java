@@ -11,11 +11,12 @@ public class UI {
     public String vardas;
     public String pavarde;
     public String pareigos;
-    public String tipas;
+    public String Tipas;
     public String valstybinisNr;
     public String pavadinimas;
     public String tiekiaIKI;
     public String Adresas;
+    public String S_Adr;
     public int kaina;
     public int kodas;
     public int Kvadratura;
@@ -90,6 +91,25 @@ public class UI {
 
 
             db.queryDb("INSERT INTO inma3638.Parduotuve VALUES('"+Nr+"','"+Adresas+"', '"+Kvadratura+"');");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void addSandelis(BufferedReader bufRead, SQL db){
+        System.out.printline("Naujo sandelio duomenys");
+
+        try {
+            System.out.println("Iveskite naujo sandelio tipa");
+            Kvadratura = bufRead.readLine();
+            System.out.println("Iveskite naujo sandelio adresa");
+            S_Adr = bufRead.readLine();
+            System.out.println("Kuriai parduotuvei tiekia");
+            Pard_Nr = Integer.parseInt(bufRead.readLine());
+
+            db.queryDb("INSERT INTO inma3638.Sandelis VALUES('"+Tipas+"','"+S_Adr+"');");
+            db.queryDb("INSERT INTO inma3638.gauna VALUES('"+S_Adr"','"Pard_Nr"'););
+
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
