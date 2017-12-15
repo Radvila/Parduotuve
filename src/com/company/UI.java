@@ -83,7 +83,7 @@ public class UI {
             System.out.println("Iveskite naujo darbuotojo pavarde");
             pavarde = bufRead.readLine();
             System.out.println("Iveskite naujo darbuotojo ID");
-            id = Integer.parseInt(bufRead.readLine())
+            id = Integer.parseInt(bufRead.readLine());
             System.out.println("Iveskite naujo darbuotojo pareigas");
             pareigos = bufRead.readLine();
             System.out.println("Iveskite naujo darbuotojo parduotuves numeri");
@@ -256,6 +256,29 @@ public class UI {
             System.out.println("Iveskite istrinamos prekes koda:");
 
             result = db.queryDb("DELETE FROM inma3638.Preke WHERE Kodas = '" + Integer.parseInt(bufRead.readLine() + "';"));
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void removeDarbuotojas(BufferedReader bufRead, SQL db) {
+        List<List> result = new LinkedList<List>();
+
+
+        try {
+            result = db.queryDb("SELECT * FROM inma3638.Darbuotojas;");
+
+            System.out.println("Darbuotojai:");
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println(
+                        (String) result.get(i).get(0) + " " + result.get(i).get(1) + " " + result.get(i).get(2)
+                                + " " + result.get(i).get(3) + " " + result.get(i).get(4));
+            }
+
+            System.out.println("Iveskite atleidziamo darbuotojo ID:");
+
+            result = db.queryDb("DELETE FROM inma3638.Darbuotojas WHERE ID = '" + Integer.parseInt(bufRead.readLine() + "';"));
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
