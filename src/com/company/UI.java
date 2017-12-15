@@ -43,10 +43,25 @@ public class UI {
                         break;
                     case 2:
                         addParduotuve(bufRead, db);
+                        break;
                     case 3:
                         addSandelis(bufRead, db);
+                        break;
                     case 4:
                         addTiekejas(bufRead, db);
+                        break;
+                    case 5:
+                        updatePosition(bufRead, db);
+                        break;
+                    case 6:
+                        findDarbuotojasByPard(bufRead, db);
+                        break;
+                    case 7:
+                        findSandelioTiekejai(bufRead, db);
+                        break;
+                    case 8:
+                        removePreke(bufRead, db);
+                        break;
                     default:
                         System.out.println("Blogas pasirinkimas");
                         break;
@@ -226,11 +241,36 @@ public class UI {
         }
     }
 
+    private void removePreke(BufferedReader bufRead, SQL db) {
+        List<List> result = new LinkedList<List>();
+
+
+        try {
+            result = db.queryDb("SELECT * FROM inma3638.preke;");
+
+            System.out.println("Prekes:");
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println((String) result.get(i).get(1) + " " + result.get(i).get(3));
+            }
+
+            System.out.println("Iveskite istrinamos prekes koda:");
+
+            result = db.queryDb("DELETE FROM inma3638.Preke WHERE Kodas = '" + Integer.parseInt(bufRead.readLine() + "';"));
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
     public void printMenu(){
         System.out.println("Pasirinkite norima operacija:");
         System.out.println("1. Prideti nauja darbuotoja");
         System.out.println("2. Prideti nauja parduotuve");
         System.out.println("3. Prideti nauja sandeli");
         System.out.println("4. Prideti nauja tiekeja");
+        System.out.println("5. Atnaujinti darbuotojo pareigas");
+        System.out.println("6. Darbuotojai pagal parduotuves");
+        System.out.println("7. Sandelio tiekejai");
+        System.out.println("8. Panaikinti preke");
     }
 }
