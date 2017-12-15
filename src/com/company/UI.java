@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,17 +27,16 @@ public class UI {
 
     public void start() {
         SQL db = new SQL();
-        //BufferedReader bufRead = new BufferedReader(new InputStreamReader(System.in));
-        choice = Integer.parseInt(bufRead.readLine());
+        BufferedReader bufRead = new BufferedReader(new InputStreamReader(System.in));
 
         printMenu();
 
-        while (1) {
+        while (true) {
             try {
                 ch = Integer.parseInt(bufRead.readLine());
                 switch (ch) {
                     case 0:
-                        System.Exit(0);
+                        System.exit(0);
                         break;
                     case 1:
                         addDarbuotojas(bufRead, db);
@@ -147,7 +147,7 @@ public class UI {
             System.out.println("Darbuotojai:");
             for (int i = 0; i < result.size(); i++) {
                 System.out.println((String) result.get(i).get(0) + " " + result.get(i).get(1) + " "
-                        + result.get(i).get(2) + " " + result.get(i).get(3)) + " " + result.get(i).get(4) +
+                        + result.get(i).get(2) + " " + result.get(i).get(3) + " " + result.get(i).get(4) +
                         " " + result.get(i).get(5));
             } System.out.println("Iveskite darbuotojo ID");
             int id = Integer.parseInt(bufRead.readLine());
