@@ -54,13 +54,19 @@ public class UI {
                         updatePosition(bufRead, db);
                         break;
                     case 6:
-                        findDarbuotojasByPard(bufRead, db);
+                        updateTransportasAdr(bufRead, db);
                         break;
                     case 7:
-                        findSandelioTiekejai(bufRead, db);
+                        findDarbuotojasByPard(bufRead, db);
                         break;
                     case 8:
+                        findSandelioTiekejai(bufRead, db);
+                        break;
+                    case 9:
                         removePreke(bufRead, db);
+                        break;
+                    case 10:
+                        removeDarbuotojas(bufRead, db);
                         break;
                     default:
                         System.out.println("Blogas pasirinkimas");
@@ -175,6 +181,32 @@ public class UI {
         }
     }
 
+    private void updateTransportasAdr(BufferedReader bufRead, SQL db) {
+        List<List> result = new LinkedList<List>();
+        List<List> extra = new LinkedList<List>();
+        try {
+            result = db.queryDb("SELECT * FROM inma3638.transportas;");
+            System.out.println("Transportas:");
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println((String) result.get(i).get(0) + " "
+                        + result.get(i).get(2));
+            }
+            System.out.println("Iveskite valst. nr.:");
+            String nr = bufRead.readLine();
+            extra = db.queryDb("SELECT * FROM inma3638.sandelis;");
+            System.out.println("Sandeliai:");
+            for (int i = 0; i < extra.size(); i++){
+                System.out.println((String) extra.get(i).get(1));
+            }
+            System.out.println("Iveskite nauja adresa:");
+            String adr = bufRead.readLine();
+            result = db.queryDb("UPDATE inma3638.transportas SET S_Adr = " + adr
+                    + " WHERE Valst_nr = '" + nr + "';");
+        } catch (Exception e) {
+            System.out.println("Error updating address: " + e.getMessage());
+        }
+    }
+
     private void findDarbuotojasByPard(BufferedReader bufRead, SQL db) {
         List<List> result = new LinkedList<List>();
 
@@ -250,7 +282,7 @@ public class UI {
 
             System.out.println("Prekes:");
             for (int i = 0; i < result.size(); i++) {
-                System.out.println((String) result.get(i).get(1) + " " + result.get(i).get(3));
+                System.out.println((String) result.get(i).get(0) + " " + result.get(i).get(2));
             }
 
             System.out.println("Iveskite istrinamos prekes koda:");
@@ -292,8 +324,10 @@ public class UI {
         System.out.println("3. Prideti nauja sandeli");
         System.out.println("4. Prideti nauja tiekeja");
         System.out.println("5. Atnaujinti darbuotojo pareigas");
-        System.out.println("6. Darbuotojai pagal parduotuves");
-        System.out.println("7. Sandelio tiekejai");
-        System.out.println("8. Panaikinti preke");
+        System.out.println("6. Atnaujinti transporto info");
+        System.out.println("7. Darbuotojai pagal parduotuves");
+        System.out.println("8. Sandelio tiekejai");
+        System.out.println("9. Panaikinti preke");
+        System.out.println("10. Panaikinti darbuotoja");
     }
 }
